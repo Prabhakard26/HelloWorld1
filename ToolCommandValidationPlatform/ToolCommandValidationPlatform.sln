@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2036
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToolCommandValidationPlatform", "ToolCommandValidationPlatform\ToolCommandValidationPlatform.csproj", "{694B6896-FBF2-4D05-A662-FB9D6F29DFEE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DriveCommands", "DriveCommands\DriveCommands.csproj", "{8AC2E64D-77CD-4634-AFCA-9C2A117BA5B6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{694B6896-FBF2-4D05-A662-FB9D6F29DFEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{694B6896-FBF2-4D05-A662-FB9D6F29DFEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{694B6896-FBF2-4D05-A662-FB9D6F29DFEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{694B6896-FBF2-4D05-A662-FB9D6F29DFEE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8AC2E64D-77CD-4634-AFCA-9C2A117BA5B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AC2E64D-77CD-4634-AFCA-9C2A117BA5B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8AC2E64D-77CD-4634-AFCA-9C2A117BA5B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8AC2E64D-77CD-4634-AFCA-9C2A117BA5B6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A6D5DD6A-3A43-4377-87AE-02634FAD39B2}
+	EndGlobalSection
+EndGlobal
