@@ -6,17 +6,18 @@ using System.Threading.Tasks;
 
 namespace DriveCommands.Commands
 {
-    public class DriveFaultResetCommand :ICommand
+    public class PreparationDisplayCommandSp : ICommand
     {
-        public string Name { get; } = "SR"; //0101
+        
+        public string Name { get; } = "Sp";
+
         public void Execute()
         {
             throw new NotImplementedException();
         }
 
         private DriveController driveController;
-
-        public DriveFaultResetCommand(DriveController controller)
+        public PreparationDisplayCommandSp(DriveController controller)
         {
             driveController = controller;
         }

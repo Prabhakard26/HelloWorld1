@@ -42,11 +42,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\CommandConstant.cs" />
+    <Compile Include="Commands\DataReadCommand.cs" />
+    <Compile Include="Commands\DataWriteCommand.cs" />
     <Compile Include="Commands\DriveFaultResetCommand.cs" />
     <Compile Include="Commands\DriveFirmwareVersionCommand.cs" />
     <Compile Include="Commands\DriveTypeCommand.cs" />
     <Compile Include="Commands\ICommand.cs" />
+    <Compile Include="Commands\ItemNumberCommand.cs" />
+    <Compile Include="Commands\JobNumberCommand.cs" />
+    <Compile Include="Commands\PanelNameCommand.cs" />
+    <Compile Include="Commands\PreparationDisplayCommandSp.cs" />
+    <Compile Include="Commands\ReadFirstFaultCommand.cs" />
     <Compile Include="Commands\RealTimeReadCommand.cs" />
+    <Compile Include="Commands\SoftwareVersionCommand.cs" />
     <Compile Include="IUdpSocket.cs" />
     <Compile Include="Commands\PreparationDisplayCommand.cs" />
     <Compile Include="Commands\ToolInterfaceCommand.cs" />

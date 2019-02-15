@@ -1,19 +1,24 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading.Tasks;
 
 namespace DriveCommands
 {
+    /// <summary>
+    /// Responsible for sending commands to Drive and reading Drive response for requested command.
+    /// </summary>
     public class UdpSocket : IUdpSocket
-    {
-        Socket socket;
+    {        
+        private readonly byte[] _mDataBuffer;
+        private int _mDataBytesRead = 0;
 
-        private AsyncCallback m_ReceiveCallBack;
-        private byte[] m_DataBuffer;
-        private int m_DataBytesRead = 0;
+        public EndPoint DriveEndPoint { get; set; }
 
-        public EndPoint DriveEndPoint;
+        public EndPoint RemoteDriveEndPoint;
 
+        private readonly Socket socket;
         public  UdpSocket(EndPoint driveEndPoint, bool isBroadCast)
         {
             socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
@@ -25,23 +30,34 @@ namespace DriveCommands
                 socket.EnableBroadcast = true;
             }
 
-            m_DataBuffer = new byte[socket.ReceiveBufferSize];
+            _mDataBuffer = new byte[socket.ReceiveBufferSize];
 
             DriveEndPoint = driveEndPoint;
+            RemoteDriveEndPoint =  new IPEndPoint(IPAddress.Parse("10.29.80.50"), 22359);
         }
-
         public void Send(byte[] drivecommand)
         {
-            socket.SendTo(drivecommand, DriveEndPoint);  
+            socket.SendTo(drivecommand, DriveEndPoint);
 
-            ReceiveData();
+            Task.Factory.StartNew( () => ReceiveData(drivecommand));
         }
-
-        public void ReceiveData()
+        
+        private Dictionary<int, bool> dictionary = new Dictionary<int,bool>(4);
+        public void ReceiveData(byte [] request)
         {
             try
             {
-               socket.BeginReceiveFrom(m_DataBuffer, 0, m_DataBuffer.Length, SocketFlags.None, ref DriveEndPoint, new AsyncCallback(OnDataReceived), null);               
+               IAsyncResult result = socket.BeginReceiveFrom(_mDataBuffer, 0, _mDataBuffer.Length, SocketFlags.None, ref RemoteDriveEndPoint, OnDataReceived, request);
+               bool completed = result.AsyncWaitHandle.WaitOne(5000);
+
+               if (completed)
+               {
+                   Console.WriteLine("succeeded");
+                }
+               else
+               {
+                   Console.WriteLine("failed");
+               }
             }
             catch (SocketException socketException)
             {
@@ -51,21 +67,20 @@ namespace DriveCommands
             }
         }
 
-
         private void OnDataReceived(IAsyncResult a_AsyncState)
         {
             try
             {
                 if (a_AsyncState.IsCompleted)
                 {
-                    m_DataBytesRead = socket.EndReceiveFrom(a_AsyncState, ref DriveEndPoint);
+                    _mDataBytesRead = socket.EndReceiveFrom(a_AsyncState, ref RemoteDriveEndPoint);
                   
-                    if (m_DataBytesRead >= 20)
+                    if (_mDataBytesRead >= 20)
                     {
-                        byte[] tempBuffer = new byte[m_DataBytesRead - 20];
-                        Array.Copy(m_DataBuffer, 20, tempBuffer, 0, m_DataBytesRead - 20);
-                        IAsyncResult iResult = socket.BeginReceiveFrom(m_DataBuffer, 0, m_DataBuffer.Length,
-                            SocketFlags.None, ref DriveEndPoint, m_ReceiveCallBack, null);
+                        byte[] tempBuffer = new byte[_mDataBytesRead - 20];
+                        Array.Copy(_mDataBuffer, 20, tempBuffer, 0, _mDataBytesRead - 20);
+
+                        //IAsyncResult iResult = socket.BeginReceiveFrom(_mDataBuffer, 0, _mDataBuffer.Length,SocketFlags.None, ref RemoteDriveEndPoint, OnDataReceived, 100);
 
                         if (null != OnDriveDataReceived)
                         {
@@ -83,6 +98,5 @@ namespace DriveCommands
         }
                
         public event EventHandler<byte[]> OnDriveDataReceived;
-
     }
 }

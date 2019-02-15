@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace DriveCommands.Commands
 {
-    public class DriveFaultResetCommand :ICommand
+    public class ItemNumberCommand : ICommand
     {
-        public string Name { get; } = "SR"; //0101
+        public string Name { get; } = "Q4";
         public void Execute()
         {
             throw new NotImplementedException();
@@ -16,7 +16,7 @@ namespace DriveCommands.Commands
 
         private DriveController driveController;
 
-        public DriveFaultResetCommand(DriveController controller)
+        public ItemNumberCommand(DriveController controller)
         {
             driveController = controller;
         }

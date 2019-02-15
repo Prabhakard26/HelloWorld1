@@ -6,17 +6,16 @@ using System.Threading.Tasks;
 
 namespace DriveCommands.Commands
 {
-    public class DriveFaultResetCommand :ICommand
+    public class SoftwareVersionCommand : ICommand
     {
-        public string Name { get; } = "SR"; //0101
+        public string Name { get; } = "Q2";//
         public void Execute()
         {
             throw new NotImplementedException();
         }
-
         private DriveController driveController;
 
-        public DriveFaultResetCommand(DriveController controller)
+        public SoftwareVersionCommand(DriveController controller)
         {
             driveController = controller;
         }

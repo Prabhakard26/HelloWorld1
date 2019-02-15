@@ -18,5 +18,12 @@ namespace DriveCommands.Commands
         {
             throw new NotImplementedException();
         }
+
+        private DriveController driveController;
+
+        public DriveTypeCommand(DriveController controller)
+        {
+            driveController = controller;
+        }
     }
 }

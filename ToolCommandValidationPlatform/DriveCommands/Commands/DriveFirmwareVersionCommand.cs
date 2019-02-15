@@ -34,7 +34,7 @@ namespace DriveCommands.Commands
         {           
             byte[] command = { 81, 67 }; //QC
 
-            driveController.ExecuteCommand(Name);
+            //driveController.ExecuteCommand(Name);
         }        
     }
 }

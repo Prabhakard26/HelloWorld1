@@ -13,5 +13,12 @@ namespace DriveCommands.Commands
         {
             throw new NotImplementedException();
         }
+
+        private DriveController driveController;
+
+        public RealTimeReadCommand(DriveController controller)
+        {
+            driveController = controller;
+        }
     }
 }
