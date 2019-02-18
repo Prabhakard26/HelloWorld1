@@ -10,7 +10,7 @@ namespace DriveCommands
 {
     public class DriveController
     {
-        private  Semaphore _pool;
+        private Semaphore _pool;
         private static bool _done;
         private readonly IUdpSocket _udpSocket;
 
@@ -18,8 +18,15 @@ namespace DriveCommands
 
         private Queue<ICommand> _commandsInExecution;
 
-        
-        public DriveController(IUdpSocket socket, int count)
+        private int count = 2;
+
+        public int CommandCount
+        {
+            get { return count; }
+            set { count = value; }
+        }
+    
+        public DriveController(IUdpSocket socket)
         {
             _udpSocket = socket;
 
@@ -30,19 +37,22 @@ namespace DriveCommands
                 _udpSocket.OnDriveDataReceived -= UdpSocket_OnDriveDataReceived;
                 _udpSocket.OnDriveDataReceived += UdpSocket_OnDriveDataReceived;
 
-                _pool = new Semaphore(count, count);
-
-                _commandsInExecution = new Queue<ICommand>(count);
-
                 Consumer();
             }
         }
-        
+
+        private bool initialized = false;
         public void AddCommand(ICommand command)
         {
-            dataItems.Add(command);
+            if (false == initialized)
+            {
+                initialized = true;
+                _pool = new Semaphore(count, count);
+                _commandsInExecution = new Queue<ICommand>(count);
+                //dataItems.CompleteAdding();
+            }
 
-            //dataItems.CompleteAdding();
+            dataItems.Add(command);           
         }
 
         public void Consumer()

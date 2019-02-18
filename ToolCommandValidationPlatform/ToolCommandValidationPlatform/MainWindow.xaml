@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ToolCommandValidationPlatform"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
@@ -16,8 +15,8 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition  Width="3*"/>
         </Grid.ColumnDefinitions>
-       
-        <ListBox Grid.Row="0" Grid.Column="0" Name="LstCommands"  SelectionMode="Multiple">
+
+        <ListBox Grid.Row="0" Grid.Column="0" Name="LstCommands"  SelectionMode="Multiple" >
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <CheckBox Content="{Binding Name}" IsChecked="{Binding Path=IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem} }" />
@@ -28,22 +27,22 @@
         <Grid Grid.Row="0" Grid.Column="1"  >
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
-                <RowDefinition  Height="*"/>
                 <RowDefinition  Height="Auto"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
-               
             </Grid.ColumnDefinitions>
 
-            <Grid Grid.Row="0" Grid.Column="0" >
+            <Grid Grid.Row="0" Grid.Column="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
-                    <RowDefinition  Height="Auto"/>
-                    <RowDefinition  Height="Auto"/>
-                    <RowDefinition  Height="Auto"/>
-                    <RowDefinition  Height="Auto"/>
-                    <RowDefinition  Height="Auto"/>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
                 <Grid.ColumnDefinitions>
@@ -51,39 +50,61 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <StackPanel Grid.Row="0" Grid.Column="0"  Orientation="Horizontal"  >
-                    <TextBlock Text="Drive IP:" Margin="5" ></TextBlock>
-                    <TextBox Name="DriveIp"  HorizontalAlignment="Left"  Width="200" Margin="50,5,5,5" />
+                <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical" Grid.ColumnSpan="2" HorizontalAlignment="Stretch">
+                    <TextBlock Text="Available Drives:" Margin="5"></TextBlock>
+                    <ListBox Name="DiscoveredDrives" Height="100" Margin="5" ItemsSource="{Binding Drives}"  SelectionChanged="DiscoveredDrives_OnSelectionChanged" >
+
+                    </ListBox>
                 </StackPanel>
-     
-                
-                <StackPanel Grid.Row="0" Grid.Column="1"  Orientation="Horizontal"  >
+
+
+                <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch">
+                    <TextBlock Text="Drive IP:" Margin="5"></TextBlock>
+                    <TextBox Name="DriveIp" HorizontalAlignment="Left" Width="200" Margin="50,5,5,5" />
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Stretch">
                     <TextBlock Text="Maximum Concurrent Commands:" Margin="5"></TextBlock>
-                    <ComboBox SelectionChanged="Selector_OnSelectionChanged" Margin="5">
-                      <ComboBoxItem>1</ComboBoxItem>
-                      <ComboBoxItem>2</ComboBoxItem>
-                      <ComboBoxItem>3</ComboBoxItem>
-                      <ComboBoxItem>4</ComboBoxItem>
-                      <ComboBoxItem>5</ComboBoxItem>
-                  </ComboBox>
-              </StackPanel>
+                    <ComboBox SelectionChanged="Selector_OnSelectionChanged" Margin="5" SelectedIndex="1">
+                        <ComboBoxItem>1</ComboBoxItem>
+                        <ComboBoxItem>2</ComboBoxItem>
+                        <ComboBoxItem>3</ComboBoxItem>
+                        <ComboBoxItem>4</ComboBoxItem>
+                        <ComboBoxItem>5</ComboBoxItem>
+                    </ComboBox>
+                </StackPanel>
 
-                <TextBlock Grid.Row="1" Grid.Column="0"  Text="Expected Result" Margin="5" />
-                <TextBox  Name="ExpectedResult" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Margin="5" Width="300" />
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="Expected Result" Margin="5" />
+                <TextBox Name="ExpectedResult" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Margin="5"
+                         Width="300" />
 
-                <TextBlock Grid.Row="2" Grid.Column="0" Text="Actual Result" Margin="5" />
-                <TextBox Name="ActualResult" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Margin="5" Width="300" />
+                <TextBlock Grid.Row="3" Grid.Column="0" Text="Actual Result" Margin="5" />
+                <TextBox Name="ActualResult" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Margin="5"
+                         Width="300" />
 
-                <TextBlock Grid.Row="3" Grid.Column="0" Text="Result in Bytes" Margin="5" />
-                <TextBox Name="ActualResultBytes" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Margin="5" Width="300" />
+                <TextBlock Grid.Row="4" Grid.Column="0" Text="Result in Bytes" Margin="5" />
+                <TextBox Name="ActualResultBytes" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" Margin="5"
+                         Width="300" />
 
-                <TextBlock Grid.Row="4" Grid.Column="0" Text="Number of times command execution" Margin="5" />
-                <TextBox Name="CommandTimes"  Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" Margin="5" Width="300" />
+                <TextBlock Grid.Row="5" Grid.Column="0" Text="Number of times command execution" Margin="5" />
+                <TextBox Name="CommandTimes" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" Margin="5"
+                         Width="300" Text="4" />
 
-            </Grid>  
+                <StackPanel Grid.Row="6" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Left" >
+                    <Button Content="Execute" Click="Button_Click" Margin="5"></Button>
+                </StackPanel>
+            </Grid>
            
-            <StackPanel Grid.Row="1" Grid.Column="0" >
-                <Button Content="Execute" Click="Button_Click" Margin="5"></Button>
+
+            <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Vertical">
+
+                <StackPanel>
+                    <TextBlock Text="Check command execution by manually providing input:(ex: QT)" Margin="5,20,5,5"></TextBlock>
+                </StackPanel>
+                <StackPanel  Orientation="Horizontal" VerticalAlignment="Bottom" Margin="5,5,5,5">
+                    <TextBox Width="400" Margin="5" Name="ManualCommandText"></TextBox>
+                    <Button Content="Execute" Click="ManualCommand" Margin="5"></Button>
+                </StackPanel>
             </StackPanel>
         </Grid>
 
@@ -91,6 +112,4 @@
             <TextBlock Name="TxtStatus"></TextBlock>
         </StatusBar>
     </Grid>
-
-
 </Window>
